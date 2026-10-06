@@ -8,13 +8,14 @@ int main()
 	while (true)
 	{
 		cout << " bienvenue dans le jeu du plus ou moins !" << endl;
-		cout << "ince de proximiter oui :1 ou non :autre";
+		cout << "indice de proximiter oui :1 ou 2: chaud/froid non :autre";
 		int choice;
 		cin >> choice;
 		cout << " quel niveau tu veux ? 1 2 ou autre  ";
 		int niv;
 		cin >> niv;
 		cout << "choisi un nombre :";
+
 		int nb_mystere = 0;
 		if (niv == 1)
 		{
@@ -28,9 +29,11 @@ int main()
 		{
 			nb_mystere = rand() % 501;
 		}
+
 		int gess;
 		int nb_essaie = 0;
 		int moretry;
+		
 
 		while (true)
 		{
@@ -39,6 +42,11 @@ int main()
 				nb_essaie = nb_essaie + 1;
 				cin >> gess;
 				cout << "il te reste " << 10 - nb_essaie << " essaie" << endl;
+				int distance = nb_mystere - gess;
+				if (distance < 0)
+				{
+					distance = distance * -1;
+				}
 				if (nb_mystere == gess)
 				{
 					cout << "gg" << endl;
@@ -82,7 +90,7 @@ int main()
 
 						}
 					}
-					else
+					if (choice == 3)
 					{
 						cout << "c'est plus ";
 					}
@@ -108,12 +116,42 @@ int main()
 							cout << "c'est moins" << endl;
 						}
 					}
-					else
+					if (choice == 3)
 					{
 						cout << " c'est moins ";
 					}
 				}
+					
+					if (choice == 2)
+					{
+						if (distance <= 50)
+						{
+							cout << " c'est tres froid" << endl;
+						}
+						else if (distance <= 30)
+						{
+							cout << "c'est froid" << endl;
+						}
+						else if (distance <= 25)
+						{
+							cout << "c'est tiede" << endl;
+						}
+						else if (distance <= 20)
+						{
+							cout << "c'est chaud" << endl;
+						}
+						else
+						{
+							cout << "c'est tres chaud " << endl;
 
+						}
+						
+					
+
+
+
+					}
+					
 			}
 
 			else
