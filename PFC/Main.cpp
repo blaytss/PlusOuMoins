@@ -3,7 +3,75 @@
 using namespace std;
 int playerscore = 0;
 int botscore = 0;
-int maxround = 3;
+int draw = 0;
+int playerchoice;
+
+
+void PrintStatswin()
+{
+	cout << "tu as gagner :" << playerscore << " fois, tu as fait :" << draw << " d'egalite et tu as perdu :" << botscore << " fois";
+}
+void PrintStatsloose()
+{
+	cout << "tu as perdu :" << botscore << " fois, tu as fait :" << draw << " d'egalite et tu as gagner :" << playerscore << " fois";
+}
+
+
+int GetIAChoice(int rock, int paper, int scissor)
+{
+	int iachoice;
+	if (playerchoice == 1)
+	{
+
+		if (rock > paper && rock > scissor)
+		{
+			iachoice = 2;
+			return iachoice;
+		}
+		else
+		{
+			iachoice = (rand() % 3) + 1;
+			return iachoice;
+		}
+		rock++;
+	}
+	else if (playerchoice == 2)
+	{
+
+		if (paper > rock && paper > scissor)
+		{
+			iachoice = 3;
+			return iachoice;
+		}
+
+		else
+		{
+			iachoice = (rand() % 3) + 1;
+			return iachoice;
+		}
+		paper++;
+	}
+	else if (playerchoice == 3)
+	{
+
+		if (scissor > rock && scissor > paper)
+		{
+			iachoice = 1;
+			return iachoice;
+		}
+		else
+		{
+			iachoice = (rand() % 3) + 1;
+			return iachoice;
+		}
+		scissor++;
+	}
+	return playerchoice;
+
+
+}
+
+
 
 int AskInt(int min, int max)
 {
@@ -17,49 +85,58 @@ int AskInt(int min, int max)
 	}
 	return value;
 }
+int Getdistance()
+{
+	int distance = playerscore - botscore;
+	if (distance < 0)
+	{
+		distance = distance * -1;
+		if (distance >= 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (distance >= 2)
+	{
+		return true;
+	}
+	else if (distance < 2)
+	{
+		return false;
+	}
+}
 
 void PrintChoice(int indice)
 {
 	if (indice == 1)
 	{
-		cout << "Pierre" ;
+		cout << "Pierre";
 
 	}
 	else if (indice == 2)
 	{
-		cout << "Feuille" ;
+		cout << "Feuille";
 
 	}
 	else
 	{
-		cout << " Ciseau" ;
+		cout << " Ciseau";
 
-	}
-}
-void MancheWin()
-{
-
-}
-void GameWin()
-{
-	if (playerscore == botscore+2)
-	{
-		cout << "la partie est gagner " << endl;
-
-	}
-	else if (botscore == playerscore + 2)
-	{
-		cout << "la partie est perdu" << endl;
 	}
 }
 
 int main()
 {
-	
-	
+
+	int maxround = 3;
+
 	cout << "bienvenue sur le jeu du Pierre ,Feuille, Ciseaux" << endl;
 
-	while ( playerscore != maxround )
+	while (true)
 	{
 
 
@@ -68,57 +145,101 @@ int main()
 
 
 		srand(time(NULL));
-
-		cout << "Pierre (1), Feuille (2), Ciseau (3) :";
-		maxround++;
-		int playerChoice = AskInt(1, 3);
-		int botChoice = (rand() % 3) + 1;
-		PrintChoice(playerChoice);
+		cout << "Pierre (1), Feuille (2), Ciseau (3) :" << endl;
+		playerchoice = AskInt(1, 3);
+		GetIAChoice(1, 2, 3);
+		system("cls");
+		PrintChoice(playerchoice);
 		cout << " VS ";
-		PrintChoice(botChoice);
+
+		PrintChoice(GetIAChoice(1, 2, 3));
 		cout << endl;
 
-			if (playerChoice == 1)
-			{
-				if (botChoice == 1)
-				{
-					cout << "Egalite" << endl;
-				}
-				else if (botChoice == 2)
-				{
-					cout << "Perdu" << endl;
-					botscore++;
-				}
-				else
-				{
-					cout << "Gagner " << endl;
-					playerscore++;
 
-				}
+
+		if (playerchoice == 1)
+		{
+			if (GetIAChoice(1, 2, 3) == 1)
+			{
+				cout << "Egalite" << endl;
+				draw++;
+			}
+			else if (GetIAChoice(1, 2, 3) == 2)
+			{
+				cout << "Perdu" << endl;
+				botscore++;
+			}
+			else
+			{
+				cout << "Gagner " << endl;
+				playerscore++;
 
 			}
-			else if (playerChoice == 2)
+
+		}
+		else if (playerchoice == 2)
+		{
+			if (GetIAChoice(1, 2, 3) == 1)
 			{
-				if (botChoice == 1)
-				{
-					cout << "gagner" << endl;
-					playerscore++;
+				cout << "Gagne" << endl;
+				playerscore++;
 
-					
-				}
-				else if (botChoice == 2)
-				{
-					cout << "Egalite" << endl;
 
-				}
-				else
-				{
-					cout << "perdu " << endl;
-					botscore++;
-
-					
-				}
 			}
+			else if (GetIAChoice(1, 2, 3) == 2)
+			{
+				cout << "Egalite" << endl;
+				draw++;
+			}
+			else
+			{
+				cout << "Perdu " << endl;
+				botscore++;
+
+
+			}
+		}
+		else if (playerchoice == 3)
+		{
+			if (GetIAChoice(1, 2, 3) == 1)
+			{
+				cout << "Perdu" << endl;
+				botscore++;
+
+
+			}
+			else if (GetIAChoice(1, 2, 3) == 2)
+			{
+				cout << "Gagne" << endl;
+				playerscore++;
+			}
+			else
+			{
+				cout << "Egalite " << endl;
+				draw++;
+			}
+
+
+
+
+
+
+		}
+		Getdistance();
+
+		if (playerscore >= 10 && Getdistance() == true)
+		{
+			cout << "la partie est gagne" << endl;
+			PrintStatswin();
+			break;
+		}
+		else if (botscore >= 10 && Getdistance() == true)
+		{
+			cout << "la partie est perdue" << endl;
+			PrintStatsloose();
+			break;
+		}
+
 	}
 	return 0;
 }

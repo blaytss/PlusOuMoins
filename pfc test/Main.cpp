@@ -4,6 +4,7 @@ using namespace std;
 int playerscore = 0;
 int botscore = 0;
 int draw = 0;
+int playerchoice;
 
 
 void PrintStatswin()
@@ -16,40 +17,57 @@ void PrintStatsloose()
 }
 
 
-int IA(int playerChoice)
+int GetIAChoice(int rock, int paper, int scissor)
 {
-	int rock = 0;
-	int paper = 0;
-	int scissor = 0;
-	if (playerChoice == 1)
+	int iachoice;
+	if (playerchoice == 1 )
 	{
-		rock++;
+		
 		if (rock > paper && rock > scissor)
 		{
-			int botchoice = 3;
-			return botchoice;
+			iachoice = 2;
+			return iachoice;
 		}
+		else
+		{
+			iachoice = (rand() % 3) + 1;
+			return iachoice;
+		}
+		rock++;
 	}
-	else if (playerChoice == 2)
+	else if (playerchoice == 2)
 	{
-		paper++;
+		
 		if (paper > rock && paper > scissor)
 		{
-			int botchoice = 1;
-			return botchoice;
+			iachoice = 3;
+			return iachoice;
 		}
-
+		
+		else
+		{
+			iachoice = (rand() % 3) + 1;
+			return iachoice;
+		}
+		paper++;
 	}
-	else if (playerChoice == 3)
+	else if (playerchoice == 3)
 	{
-		scissor++;
+		
 		if (scissor > rock && scissor > paper)
 		{
-			int botchoice = 2;
-			return botchoice;
+			iachoice = 1;
+			return iachoice;
 		}
+		else
+		{
+			iachoice = (rand() % 3) + 1;
+			return iachoice;
+		}
+		scissor++;
 	}
-	return playerChoice;
+	return playerchoice;
+	
 
 }
 
@@ -128,25 +146,25 @@ int main()
 
 		srand(time(NULL));
 		cout << "Pierre (1), Feuille (2), Ciseau (3) :" << endl;
-		int playerChoice = IA(AskInt(1, 3));
+		playerchoice = AskInt(1, 3);
+		GetIAChoice(1,2,3);
 		system("cls");
-		int botChoice =  1;
-		PrintChoice(playerChoice);
+		PrintChoice(playerchoice);
 		cout << " VS ";
 		
-		PrintChoice(botChoice);
+		PrintChoice(GetIAChoice(1, 2, 3));
 		cout << endl;
 
 
 		
-		if (playerChoice == 1)
+		if (playerchoice == 1)
 		{
-			if (botChoice == 1)
+			if (GetIAChoice(1, 2, 3) == 1)
 			{
 				cout << "Egalite" << endl;
 				draw++;
 			}
-			else if (botChoice == 2)
+			else if (GetIAChoice(1, 2, 3) == 2)
 			{
 				cout << "Perdu" << endl;
 				botscore++;
@@ -159,16 +177,16 @@ int main()
 			}
 
 		}
-		else if (playerChoice == 2)
+		else if (playerchoice == 2)
 		{
-			if (botChoice == 1)
+			if (GetIAChoice(1, 2, 3) == 1)
 			{
 				cout << "Gagne" << endl;
 				playerscore++;
 
 
 			}
-			else if (botChoice == 2)
+			else if (GetIAChoice(1, 2, 3) == 2)
 			{
 				cout << "Egalite" << endl;
 				draw++;
@@ -181,16 +199,16 @@ int main()
 
 			}
 		}
-		else if (playerChoice == 3)
+		else if (playerchoice == 3)
 		{
-			if (botChoice == 1)
+			if (GetIAChoice(1, 2, 3) == 1)
 			{
 				cout << "Perdu" << endl;
 				botscore++;
 
 
 			}
-			else if (botChoice == 2)
+			else if (GetIAChoice(1, 2, 3) == 2)
 			{
 				cout << "Gagne" << endl;
 				playerscore++;
