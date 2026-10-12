@@ -16,7 +16,7 @@ int AskNumber(int min, int max)
 }
 int matchnull(int tab[])
 {
-    for (int i = 1; i < 10; i++)
+    for (int i = 0; i < 9; i++)
     {
         if (tab[i] != 1)
         {
@@ -82,10 +82,10 @@ int main()
     
     cout << "Bienvenue sur le Morpion" << endl;
     
-    int i = 1;
-    int tab[10];
+    int i = 0;
+    int tab[9];
     
-    for (int i = 1; i < 10; i++)
+    for (int i = 0; i < 9; i++)
     {
         tab[i] = i;
     }
@@ -93,15 +93,15 @@ int main()
     while (true)
     {
 
-        for (int i = 1; i < 10; i++)
+        for (int i = 0; i < 9; i++)
         {
             printCell(tab[i]);
-            if (i % 3 == 0)
+            if ((i+1) % 3 == 0)
             {
                 cout << endl;
             }
         }
-        int size = 2;
+        int size = 3;
         cout << "Choisir une ligne" << endl;
         int indexi = AskNumber(1, 3);
         cout << "Choisir une colonne" << endl;
