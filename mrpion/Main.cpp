@@ -24,64 +24,69 @@ int matchnull(int tab[])
         }
     }
 }
-void IAchoice()
+int GettIAchoice()
+
 {
-    int number;
-    srand(time(NULL));
+    int freecells[9];
+    int freecount = 0;
 
+    int index = (indexi - 1) * size + (indexj - 1);
+
+    return index;
 }
-
 int MatchWin(int tab[])
 {
-    if (tab[1] == tab[2] && tab[2] == tab[3])
+    for (int i = 0; i < 3;i++)
     {
-        return 1;
+        int index = i * 3;
+        if (tab[index] == tab[index + 1] && tab[index + 1] == tab[index + 2])
+        {
+            return 1;
+        }
+        else if (tab[i] == tab[i + 3] && tab[i +3] == tab[i+6])
+        {
+            return 1;
+        }
     }
-    if (tab[4] == tab[5] && tab[5] == tab[6])
+}
+int Matchloose(int tab[])
+{
+    for (int i = 0; i < 3;i++)
     {
-        return 1;
+        int index = i * 3;
+        if (tab[index] == tab[index + 1] && tab[index + 1] == tab[index + 2])
+        {
+            return 1;
+        }
+        else if (tab[i] == tab[i + 3] && tab[i + 3] == tab[i + 6])
+        {
+            return 1;
+        }
     }
-    if (tab[7] == tab[8] && tab[8] == tab[9])
-    {
-        return 1;
-    }
-    if (tab[1] == tab[4] && tab[4] == tab[7])
-    {
-        return 1;
-    }
-    if (tab[2] == tab[5] && tab[5] == tab[8])
-    {
-        return 1;
-    }
-    if (tab[3] == tab[6] && tab[6] == tab[9])
-    {
-        return 1;
-    }
-} 
-
+}
 void printCell(int c)
 {
     cout << "[";
     if (c == -1)
     {
-        cout << "X";
+        cout << " X ";
     }
     else if (c == -2)
     {
-        cout << "O";
+        cout << " O ";
     }
     else
     {
-        cout << c;
+        cout << " - ";
     }
     cout << "]";
 }
 
 int main()
 {
-    
+    srand(time(NULL));
     cout << "Bienvenue sur le Morpion" << endl;
-    
+    int o = 1;
     int i = 0;
     int tab[9];
     
@@ -92,26 +97,36 @@ int main()
 
     while (true)
     {
-
         for (int i = 0; i < 9; i++)
         {
             printCell(tab[i]);
-            if ((i+1) % 3 == 0)
+            if ((i + 1) % 3 == 0)
             {
                 cout << endl;
             }
         }
-        int size = 3;
-        cout << "Choisir une ligne" << endl;
-        int indexi = AskNumber(1, 3);
-        cout << "Choisir une colonne" << endl;
-        int indexj = AskNumber(1, 3);
-        int index = (indexi-1) * size + (indexj-1);
+        if (o == 1)
+        {
+            
+            int size = 3;
+            cout << "Choisir une ligne" << endl;
+            int indexi = AskNumber(1, 3);
+            cout << "Choisir une colonne" << endl;
+            int indexj = AskNumber(1, 3);
+            int index = (indexi - 1) * size + (indexj - 1);
+
+            system("cls");
+            tab[index] = -1;
+           
+        }
+        else
+        {
+           
+            cout << "au tour de l ia " << endl;
+            int ia = GettIAchoice();
         
-        system("cls");
-        tab[index] = -1;
-        cout << "au tour de l ia " << endl;
-        
+            
+        }
 
         if (matchnull(tab) == 1)
         {
@@ -124,10 +139,13 @@ int main()
             cout << "Vous avez gagne ! " << endl;
             break;
         }
-        else
+        else if (Matchloose(tab) == 1)
         {
             cout << "Vous avez perdu" << endl;
+            break;
         }
+
+        o = 3 - o;
     }
 
     return 0;
