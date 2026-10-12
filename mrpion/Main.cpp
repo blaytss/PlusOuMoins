@@ -1,6 +1,11 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
+
+const int N = 3;          
+const int SIZE = N * N;   
 
 int AskNumber(int min, int max)
 {
@@ -14,56 +19,73 @@ int AskNumber(int min, int max)
     }
     return number;
 }
+
 int matchnull(int tab[])
 {
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < SIZE; i++)
     {
-        if (tab[i] != 1)
+        if (tab[i] >= 0)
         {
             return 0;
         }
     }
+    return 1;
 }
-int GettIAchoice()
 
+int GettIAchoice(int tab[])
 {
-    int freecells[9];
+    int freecells[SIZE];
     int freecount = 0;
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (tab[i] >= 0)
+        {
+            freecells[freecount] = i;
+            freecount++;
+        }
+    }
 
-    int index = (indexi - 1) * size + (indexj - 1);
-
-    return index;
+    int randomIndex = rand() % freecount;
+    return freecells[randomIndex];
 }
+
+
+int HasWon(int tab[], int player)
+{
+    for (int i = 0; i < N; i++)
+    {
+        bool row = true;
+        bool col = true;
+        for (int j = 0; j < N; j++)
+        {
+            if (tab[i * N + j] != player)
+            {
+                row = false;
+			}   
+            if (tab[j * N + i] != player) 
+            {
+                col = false;
+            }
+        }
+        if (row || col)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int MatchWin(int tab[])
 {
-    for (int i = 0; i < 3;i++)
-    {
-        int index = i * 3;
-        if (tab[index] == tab[index + 1] && tab[index + 1] == tab[index + 2])
-        {
-            return 1;
-        }
-        else if (tab[i] == tab[i + 3] && tab[i +3] == tab[i+6])
-        {
-            return 1;
-        }
-    }
+    return HasWon(tab, -1);
 }
+
 int Matchloose(int tab[])
 {
-    for (int i = 0; i < 3;i++)
-    {
-        int index = i * 3;
-        if (tab[index] == tab[index + 1] && tab[index + 1] == tab[index + 2])
-        {
-            return 1;
-        }
-        else if (tab[i] == tab[i + 3] && tab[i + 3] == tab[i + 6])
-        {
-            return 1;
-        }
-    }
+    return HasWon(tab, -2);
 }
+
 void printCell(int c)
 {
     cout << "[";
@@ -85,63 +107,69 @@ void printCell(int c)
 int main()
 {
     srand(time(NULL));
-    cout << "Bienvenue sur le Morpion" << endl;
+    cout << "Bienvenue sur le Morpion (" << N << "x" << N << ")" << endl;
     int o = 1;
-    int i = 0;
-    int tab[9];
-    
-    for (int i = 0; i < 9; i++)
+    int tab[SIZE];
+
+    for (int i = 0; i < SIZE; i++)
     {
         tab[i] = i;
     }
 
     while (true)
     {
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < SIZE; i++)
         {
             printCell(tab[i]);
-            if ((i + 1) % 3 == 0)
+            if ((i + 1) % N == 0)
             {
                 cout << endl;
             }
         }
+
         if (o == 1)
         {
-            
-            int size = 3;
-            cout << "Choisir une ligne" << endl;
-            int indexi = AskNumber(1, 3);
-            cout << "Choisir une colonne" << endl;
-            int indexj = AskNumber(1, 3);
-            int index = (indexi - 1) * size + (indexj - 1);
+            int index;
+            while (true)
+            {
+                cout << "Choisir une ligne" << endl;
+                int indexi = AskNumber(1, N);
+                cout << "Choisir une colonne" << endl;
+                int indexj = AskNumber(1, N);
+                index = (indexi - 1) * N + (indexj - 1);
+
+                if (tab[index] >= 0)
+                    break;
+                cout << "Case deja prise !" << endl;
+            }
 
             system("cls");
             tab[index] = -1;
-           
         }
         else
         {
-           
             cout << "au tour de l ia " << endl;
-            int ia = GettIAchoice();
-        
-            
+            int ia = GettIAchoice(tab);
+            tab[ia] = -2;
         }
 
-        if (matchnull(tab) == 1)
+        if (MatchWin(tab) == 1 || Matchloose(tab) == 1 || matchnull(tab) == 1)
         {
-            cout << "Match nul !" << endl;
-            break;
-        }
+            for (int i = 0; i < SIZE; i++)
+            {
+                printCell(tab[i]);
+                if ((i + 1) % N == 0)
+                {
+                    cout << endl;
+                }
+            }
 
-        else if (MatchWin(tab) == 1)
-        {
-            cout << "Vous avez gagne ! " << endl;
-            break;
-        }
-        else if (Matchloose(tab) == 1)
-        {
-            cout << "Vous avez perdu" << endl;
+            if (MatchWin(tab) == 1)
+                cout << "Vous avez gagne ! " << endl;
+            else if (Matchloose(tab) == 1)
+                cout << "Vous avez perdu" << endl;
+            else
+                cout << "Match nul !" << endl;
             break;
         }
 
