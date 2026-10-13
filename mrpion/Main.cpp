@@ -3,10 +3,9 @@
 #include <ctime>
 
 using namespace std;
-
-const int N = 3;          
-const int SIZE = N * N;   
-
+const int N = 20;          
+const int Size = N * N;   
+int currentSize = 9;
 int AskNumber(int min, int max)
 {
     int number;
@@ -22,21 +21,26 @@ int AskNumber(int min, int max)
 
 int matchnull(int tab[])
 {
-    for (int i = 0; i < SIZE; i++)
+    currentSize++;
+    if (currentSize <= Size)
     {
-        if (tab[i] >= 0)
+        for (int i = 0; i < currentSize; i++)
         {
-            return 0;
+            if (tab[i] >= 0)
+            {
+                return 0;
+            }
         }
+        return 1;
     }
-    return 1;
+    
 }
 
 int GettIAchoice(int tab[])
 {
-    int freecells[SIZE];
+    int freecells[Size];
     int freecount = 0;
-    for (int i = 0; i < SIZE; i++)
+    for (int i = 0; i < Size; i++)
     {
         if (tab[i] >= 0)
         {
@@ -46,12 +50,15 @@ int GettIAchoice(int tab[])
     }
 
     int randomIndex = rand() % freecount;
+    if (randomIndex >currentSize)
+
     return freecells[randomIndex];
 }
 
 
 int HasWon(int tab[], int player)
 {
+    //colon et ligne 
     for (int i = 0; i < N; i++)
     {
         bool row = true;
@@ -71,6 +78,24 @@ int HasWon(int tab[], int player)
         {
             return 1;
         }
+    }
+    //diag
+    bool diag1 = true;
+    bool diag2 = true;
+    for (int j = 0; j < N; j++)
+    {
+        if (tab[j * N + j] != player)
+        {
+            diag1 = false;
+        }
+        if (tab[j * N + (N -1 -j)] != player)
+        {
+            diag2 = false;
+        }
+    }
+    if (diag1 || diag2)
+    {
+        return 1;
     }
 
     return 0;
@@ -109,19 +134,19 @@ int main()
     srand(time(NULL));
     cout << "Bienvenue sur le Morpion (" << N << "x" << N << ")" << endl;
     int o = 1;
-    int tab[SIZE];
+    int tab[Size];
 
-    for (int i = 0; i < SIZE; i++)
+    for (int i = 0; i < Size; i++)
     {
         tab[i] = i;
     }
 
     while (true)
     {
-        for (int i = 0; i < SIZE; i++)
+        for (int i = 0; i < currentSize; i++)
         {
             printCell(tab[i]);
-            if ((i + 1) % N == 0)
+            if ((i + 1) % 3 == 0)
             {
                 cout << endl;
             }
@@ -133,10 +158,10 @@ int main()
             while (true)
             {
                 cout << "Choisir une ligne" << endl;
-                int indexi = AskNumber(1, N);
+                int indexi = AskNumber(1, currentSize);
                 cout << "Choisir une colonne" << endl;
-                int indexj = AskNumber(1, N);
-                index = (indexi - 1) * N + (indexj - 1);
+                int indexj = AskNumber(1, currentSize);
+                index = (indexi - 1) * currentSize + (indexj - 1);
 
                 if (tab[index] >= 0)
                     break;
@@ -155,7 +180,7 @@ int main()
 
         if (MatchWin(tab) == 1 || Matchloose(tab) == 1 || matchnull(tab) == 1)
         {
-            for (int i = 0; i < SIZE; i++)
+            for (int i = 0; i < Size; i++)
             {
                 printCell(tab[i]);
                 if ((i + 1) % N == 0)
