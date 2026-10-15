@@ -5,6 +5,7 @@ using namespace std;
 #define GREEN "\033[32m"
 #define RED "\033[31m"
 #define DEFAULT "\033[0m"
+
 int CheckWin(const char word[], const char guess[])
 {
 	for (int i = 0; i < 6; i++)
@@ -50,6 +51,8 @@ void Print_word_said(const char word[], const char guess[])
 
 int main()
 {
+	srand(time(NULL));
+
 	const char word[] = "table";
 	char guess[6];
 
