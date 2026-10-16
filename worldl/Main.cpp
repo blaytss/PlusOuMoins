@@ -3,29 +3,47 @@
 using namespace std;
 
 #define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+
 #define RED "\033[31m"
 #define DEFAULT "\033[0m"
 
-int CheckWin(const char word[], const char guess[])
+
+int Lenght_Word(const char* chooseword)
 {
-	for (int i = 0; i < 6; i++)
-	{
-		if (guess[i] != word[i])
-		{
-			return 0;
-		}
-	}
-	return 1;
+	int llenght = 0;
+	while (chooseword[llenght] != '\0')
+		llenght++;
+	return llenght;
 }
 
-void VerifyWord(const char word[], const char guess[])
+bool CheckWin(const char chooseword[], const char guess [])
+{
+	int i = 0;
+	while (true)
+	{
+		if (chooseword[i] != guess[i])
+		{
+			return false;
+		}
+		if (chooseword[i] == '\0')
+		{
+			break;
+		}
+		i++;
+	}
+	return true;
+	
+}
+
+void VerifyWord(const char chooseword[], const char guess[])
 {
 	cout << "Le mot a deviner est: ";
 	for (int i = 0; i < 6; i++)
 	{
-		if (guess[i] == word[i])
+		if (guess[i] == chooseword[i])
 		{	
-				cout << GREEN <<" " << word[i] <<" " << DEFAULT;
+				cout << GREEN <<" " << chooseword[i] <<" " << DEFAULT;
 		}
 		else 
 		{
@@ -34,48 +52,65 @@ void VerifyWord(const char word[], const char guess[])
 	}
 }
 
-void Print_word_said(const char word[], const char guess[])
+void Print_word_said(const char chooseword[], const char guess[])
 {
 	cout << "Le mot que vous avez dit est: ";
 	for (int i = 0; i < 6; i++)
-		if (guess[i] == word[i])
+		if (guess[i] == chooseword[i])
 		{
 			cout << GREEN << guess[i] << DEFAULT;
 		}
-		else
+		else if (guess[i] != chooseword[i])
 		{
 			cout << RED << guess[i] << DEFAULT;
+		}
+		else
+		{
+			cout << YELLOW << guess[i] << DEFAULT;
 		}
 	cout << endl;
 }
 
 int main()
 {
+
+
 	srand(time(NULL));
 
-	const char word[] = "table";
-	char guess[6];
+	int numbernumber = rand() % 5;
+	const char* word[] =
+	{
+		"table", "burger", "chaise"
+	};
+	const char* chooseword = word[numbernumber];
+	int maxsize = Lenght_Word(chooseword);
+	char guess[60];
 
 	cout << "Bienvenue dans Wordle!" << endl;
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < maxsize; i++)
 	{
-		cout << "Entrez un mot de 6 lettres: " << endl;
+		cout << "Entrez un mot de "<< maxsize <<" lettres: " << endl;
 		cin >> guess;
 
-		VerifyWord(word, guess);
-		Print_word_said(word,guess);
-		if (CheckWin(word, guess))
+		VerifyWord(chooseword, guess);
+		Print_word_said(chooseword,guess);
+		while (true)
 		{
-			cout << "bravo vous avez trouvez le mot" << endl;
-			cout << "le mot etait: " << word << endl;
-			break;
+			if ((CheckWin(chooseword, guess)) == true)
+			{
+				cout << "bravo vous avez trouvez le mot" << endl;
+				cout << "le mot etait: " << chooseword << endl;
+				break;
+			}
+			else if ((CheckWin(chooseword, guess)) == false)
+			{
+				cout << "Vous n'avez pas trouvé le mot, essayez encore!" << endl;
+				cout << "le mot etait: " << word << endl;
+				break;
+			}
 		}
-		else
-		{
-			cout << "Vous n'avez pas trouvé le mot, essayez encore!" << endl;
-			cout << "le mot etait: " << word << endl;
-			break;
-		}
+		
 	}
 	return 0;
 }
+
