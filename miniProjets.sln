@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PFC", "PFC\PFC.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pfc test", "pfc test\pfc test.vcxproj", "{50F2805E-A868-4BBE-92B1-EB7448FCA4AE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Morpion", "Morpion\Morpion.vcxproj", "{F0935F88-AAEF-4566-886C-79FC27859768}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,14 +41,6 @@ Global
 		{50F2805E-A868-4BBE-92B1-EB7448FCA4AE}.Release|x64.Build.0 = Release|x64
 		{50F2805E-A868-4BBE-92B1-EB7448FCA4AE}.Release|x86.ActiveCfg = Release|Win32
 		{50F2805E-A868-4BBE-92B1-EB7448FCA4AE}.Release|x86.Build.0 = Release|Win32
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Debug|x64.ActiveCfg = Debug|x64
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Debug|x64.Build.0 = Debug|x64
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Debug|x86.ActiveCfg = Debug|Win32
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Debug|x86.Build.0 = Debug|Win32
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Release|x64.ActiveCfg = Release|x64
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Release|x64.Build.0 = Release|x64
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Release|x86.ActiveCfg = Release|Win32
-		{F0935F88-AAEF-4566-886C-79FC27859768}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
